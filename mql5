@@ -1,0 +1,170 @@
+
+//+------------------------------------------------------------------+
+//|                                             Green Month AI        |
+//|                                   Developed by Forex Robot Easy Team  |
+//|                                             www.forexroboteasy.com|
+//+------------------------------------------------------------------+
+
+// Include necessary libraries
+#include <Trade\Trade.mqh>
+#include <Indicators\CCI\CCI.mqh>
+#include <WebRequests\WebRequest.mqh>
+
+// Define constants
+#define MODE_REAL 1
+
+// Define global variables
+int g_mode = MODE_REAL;
+
+//+------------------------------------------------------------------+
+//| Custom indicator initialization function                         |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    // Initialize trading functions
+    if(!Trade.Init())
+    {
+        Print('Failed to initialize trading functions!');
+        return INIT_FAILED;
+    }
+    
+    // Initialize CCI indicator
+    if(!CCI.Init(Symbol(), PERIOD_H1))
+    {
+        Print('Failed to initialize CCI indicator!');
+        return INIT_FAILED;
+    }
+    
+    // Initialize web request
+    if(!WebRequest.Initialize())
+    {
+        Print('Failed to initialize web request!');
+        return INIT_FAILED;
+    }
+    
+    // Connect to news websites
+    if(!WebRequest.Connect('www.newswebsite1.com'))
+    {
+        Print('Failed to connect to news website 1!');
+        return INIT_FAILED;
+    }
+    
+    if(!WebRequest.Connect('www.newswebsite2.com'))
+    {
+        Print('Failed to connect to news website 2!');
+        return INIT_FAILED;
+    }
+    
+    return INIT_SUCCEEDED;
+}
+
+//+------------------------------------------------------------------+
+//| Custom indicator deinitialization function                       |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+    // Disconnect from news websites
+    WebRequest.Disconnect('www.newswebsite1.com');
+    WebRequest.Disconnect('www.newswebsite2.com');
+    
+    // Deinitialize web request
+    WebRequest.Deinitialize();
+    
+    // Deinitialize CCI indicator
+    CCI.Deinit();
+    
+    // Deinitialize trading functions
+    Trade.Deinit();
+}
+
+//+------------------------------------------------------------------+
+//| Custom indicator iteration function                              |
+//+------------------------------------------------------------------+
+void OnCalculate(const int rates_total,
+                 const int prev_calculated,
+                 const int begin,
+                 const double& price[])
+{
+    // Check if the operating mode is manual
+    if(g_mode == MODE_REAL)
+    {
+        // Perform AI analysis on macro-economic statistics and news outcomes
+        // ...
+        
+        // Check CCI indicator for trade entries
+        if(CCI.GetBuffer(0)[0] > 100)
+        {
+            // Open a buy trade
+            Trade.Buy(Symbol(), 0.01, price[0], 0, 0, 0, 'Green Month AI');
+        }
+        else if(CCI.GetBuffer(0)[0] < -100)
+        {
+            // Open a sell trade
+            Trade.Sell(Symbol(), 0.01, price[0], 0, 0, 0, 'Green Month AI');
+        }
+    }
+}
+
+//+------------------------------------------------------------------+
+//| Custom function to change operating mode                          |
+//+------------------------------------------------------------------+
+void ChangeMode(const int mode)
+{
+    g_mode = mode;
+    Print('Operating mode changed to: ', (g_mode == MODE_REAL) ? 'Real' : 'Demo');
+}
+
+//+------------------------------------------------------------------+
+//| Custom function to align with market trends and improve strategy  |
+//+------------------------------------------------------------------+
+void AdjustStrategy()
+{
+    // Implement necessary changes to align with market trends
+    // ...
+}
+
+//+------------------------------------------------------------------+
+//| Custom function to test trading decisions                         |
+//+------------------------------------------------------------------+
+void TestTradingDecisions()
+{
+    // Perform testing on historical data to validate trading decisions
+    // ...
+}
+
+//+------------------------------------------------------------------+
+//| Custom function to provide documentation and instructions         |
+//+------------------------------------------------------------------+
+void ProvideDocumentation()
+{
+    // Generate and provide documentation for the Green Month AI software
+    // ...
+}
+
+//+------------------------------------------------------------------+
+//| Custom function to address issues or bugs                         |
+//+------------------------------------------------------------------+
+void AddressIssuesOrBugs()
+{
+    // Identify and resolve any issues or bugs that arise during development
+    // ...
+}
+
+//+------------------------------------------------------------------+
+//| Custom function to provide progress updates                       |
+//+------------------------------------------------------------------+
+void ProvideProgressUpdates()
+{
+    // Send regular progress updates to the project stakeholders
+    // ...
+}
+
+//+------------------------------------------------------------------+
+//| Custom function to deliver final code and deliverables            |
+//+------------------------------------------------------------------+
+void DeliverCodeAndDeliverables()
+{
+    // Prepare and deliver the final code and any required deliverables
+    // ...
+}
+
